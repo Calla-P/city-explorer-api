@@ -2,52 +2,64 @@
 
 console.log('My first server');
 
-// require('dotenv').config();
-// // express server library
-// const express = require('express');
+// What is Required
+const express = require('express');
+require('dotenv').config();
+const cors = require('cors');
+// const axios = require('axios');
+let weather = require('./data/weather.json');
+
+// What  is Used
+const app = express();
+app.use(cors());
+const PORT=process.env.PORT || 3002;
 
 
-// const app = express();
+// The Routes we take
+// app.get('weather',weather);
+// app.get similar to axios.get
 
-// const cors = require ('cors');
-// const { response } = require('express');
+app.get('/',(request,response)=>{
+    response.send('Hello, from my  first server');
+});
 
-// // anyone can request to our server, typically you want o put url limitations
-// app.use(cors())
-// // we typically get the the env with the process, this portion is mostly for trouble shooting
+app.get('/weather', (request, response) => {
+    // let lat = request.query.lat;
+    // let lon = request.query.lon;
+    // let searchQuery = weatherData.filter(city => (city.lat === lat && city.lon === lon));
+    let cityName = request.query.searchQuery;
+    let city = weather.find(city => city.city_name === cityName)
+    let threeDayForecast = city.data.map(day=> new Forecast(day));
+    threeDayForecast.length < 1 ? response.status(500).send('Error. City not covered by system.') : response.status(200).send(threeDayForecast);
+  });
 
-// const PORT =process.env.PORT
+// for the routes that are undefined 
+app.get('*', (request,response) => {
+    response.send('Exist this route does not');
+});
 
-// const list = require('./data/weather.json')
+// The classes 
 
-// //  request is the request object the response is the object we are sending back
-
-// app.get('./',(request,response) =>{
-//     response.send('Hey  your endpoint is working');
-
-// });
-
-// app.get('/bananas',(request,response)=>{
-//     response.send('This is bananas')
-// });
-
-// app.listen(PORT,() => console.log ('listening on $(PORT)'
-// ));
-
-// app.get('/list',(request,response)=>{
-// response.send(list)});
+class Forecast{
+constructor(weatherObj){
+    this.date = weatherObj.datetime;
+    this.description = weatherObj.weather.description.toLowerCase();
+};
+}
 
 
-// class List{
+// for listening
+app.listen(PORT, () => console.log(`You are listening to port ${PORT}`));
 
-//     constructor(type){
-//         let 
-//     }
-// }
 
-// getItems(){
-//     return this.items.map(item =>{
-//         return{item.name, description: item.desription}
-//     }
-//         )
-// }
+
+// class Forecast {
+    //     constructor(weatherObj){
+    //         console.log('weatherObj:', weatherObj);
+    //         this.date = weatherObj.datetime;
+    //         this.description = weatherObj.weather.description.toLowerCase();
+    //         this.low = weatherObj.low_temp
+    //         this.high = weatherObj.high_temp;
+    //         this.wholeDescription = 'Today is a high of ${this.high}, low of ${this.low}, with probably ${this.description}.';
+    //     };
+    // };
