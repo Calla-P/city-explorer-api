@@ -1,7 +1,7 @@
 # city-explorer-api
 
 **Author**: Paula Davidson
-**Version**: 1.0.0
+**Version**: 1.0.5
 
 ## Overview
 
@@ -26,6 +26,18 @@ Name of feature: Weather.json
 Estimate of time needed to complete: 3 hours
 
 Start time: 1:00pm
+
+Finish time: 8:30pm
+
+Actual time needed to complete: 7.5 and counting
+
+Time Estimates
+
+Name of feature: Weather and Movies
+
+Estimate of time needed to complete: 4 hours
+
+Start time: 6:45pm 2/1/23
 
 Finish time: 8:30pm
 
