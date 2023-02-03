@@ -3,7 +3,10 @@ const axios = require('axios');
 let movies = async function(request, response) {
     let searchMovie = request.query.search;
     let movieURL = `https://api.themoviedb.org/3/search/movie?api_key=${process.env.MOVIE_API_KEY}&query=${searchMovie}`;
+    console.log('movieURL', movieURL);
     let movieResults = await axios.get(movieURL);
+    console.log('movieResults.data', movieResults.data);
+
     let bestMovies = movieResults.data.results.map(movie => new Movie(movie));
     bestMovies.length < 1 ? response.status(500).send('Nope. That is not found here.') : response.status(200).send(bestMovies);
 };
